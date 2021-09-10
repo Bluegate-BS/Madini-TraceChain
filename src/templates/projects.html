@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  .image-upload>input {
+  display: none;
+}
+   </style>
+</style>
+  <div class="row">
+      <div class="col-md-12">
+        <div class="card card-chart">
+          <div class="card-header card-header-success">
+            Stage I of Product Identification 
+          </div>
+          <div class="card-body">
+                        <div class="row">
+                <div class="col-md-6"> 
+                  <span  style="color:red" >*</span> 
+                     <label style="font-size: 12px;" for="document">SKU</label>                 
+                  <input type="text" id="sku" class="form-control" required  placeholder="SKU Code"/>           
+              </div>  
+              <div class="col-md-6"> 
+                <span  style="color:red" >*</span>    <label style="font-size: 12px;font-size: 12px;" for="document">Product Name</label>
+                <input type="text" id="pname" class="form-control"  required placeholder="Product Name"/>           
+            </div>
+          
+            <div class="col-md-6"> 
+          <span  style="color:red" >*</span>    <label style="font-size: 12px;font-size: 12px;" for="document">Write Description</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                </div>
+                <span class="input-group-text">Write Description</span>
+                <textarea class="form-control" id="descr" name="descr"  aria-label="With textarea" required></textarea>
+              </div>  </div> 
+              <div class="col-md-6"> 
+                <form action='/process' method="POST" autocomplete="off">
+                <div class="form-group">
+                  <span  style="color:red">*</span> <label style="font-size: 12px;font-size: 12px;" for="document">Main Image</label>
+                    <input type="file"  accept=".png, .jpg, .jpeg" id="document" class="form-control" accept='*' placeholder="Select file"/>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="chunkSize" class="form-control" value="1048576" hidden/>
+                </div>
+                <div class="form-group">
+                     <input type="text"  class="form-control"  hidden   name="hash" id = "hash" required/>
+                </div>
+               </div> 
+          <div class="col-md-2"> 
+   <br> 
+            <input type="button" class="button is-block is-info is-small is-fullwidth" id='script' name="scriptbutton" value=" Submit " onclick="goPython()">
+            <br>
+            <p style="color:green" id="result" class="result"></p> 
+            <p style="color:green" id="statusMsgsync" class="statusMsgsync"></p>
+            <p style="color:green" id="statusMsg" class="statusMsg"></p>
+            <p style="color:white" id="statusMsgerr" class="statusMsgerr"></p>    </div>    
+            </div>
+           
+           
+           <hr/>
+          
+             <table class="table table-striped">
+              <thead>
+                 <tr>
+                    <th><B>SKU</B></th>
+                    <th><B>PRODUCT NAME</B></th>
+                    <th><b>HASH</b></th>
+                    <th><b>Actions</b></th>
+                 </tr>
+              </thead>
+              
+              <tbody>
+                 {% for verif in verif %}
+                    <tr>
+                       <td><B>{{ verif.sku }}</B></td>
+                       <td><B>{{ verif.pname }}</B></td>
+                       <td><B>{{ verif.thash }}</B></td>
+ 
+                      </td> 
+                     </tr>
+                 {% endfor %}
+              </tbody>
+      </table> </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">End of Section I</i> 
+          
+           </div>
+          </div>
+           
+         </div>
+      </div>
+     
+        
+ {% endblock %}
+ 
+ 

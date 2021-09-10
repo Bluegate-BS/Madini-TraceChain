@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  .image-upload>input {
+  display: none;
+}
+   </style>
+</style>
+  <div class="row">
+      <div class="col-md-12">
+        <div class="card card-chart">
+          <div class="card-header card-header-success">
+            Stage I of Product Identification 
+          </div>
+          <div class="card-body">
+                <div class="row">
+                </div>            
+           <hr/>
+             <table class="table table-table-sm ">
+              <thead>
+                 <tr>
+                    <th style="font-size: 12px;"><B>SKU</B></th>
+                    <th style="font-size: 12px;"><B>Project Name</B></th>
+                      <th style="font-size: 12px;"><b>Actions</b></th>
+                  </tr>
+              </thead>
+              <tbody>
+                 {% for verif in verif %}
+                    <tr>
+                       <td style="font-size: 13px;"><B>{{ verif.sku }}</B></td>
+                       <td style="font-size: 13px;"><B>{{ verif.pname }}</B></td>
+                         <td><B><a href="/verified?thash={{ verif.thash }}&pname={{ verif.pname }}&sku={{ verif.sku }}&mainimage={{ verif.mainimage }}&bhash={{ verif.bhash }}&imageone={{ verif.imageone }}&id={{ verif.id }}&imagetwo={{ verif.imagetwo }}&imagethree={{ verif.imagethree }}&imagefour={{ verif.imagefour }}&imagefive={{ verif.imagefive }}&fileone={{ verif.fileone }}&filetwo={{ verif.filetwo }}&filethree={{ verif.filethree }}&porigin={{ verif.porigin }}&lat={{ verif.lat }}&longt={{ verif.longt }}"><span style="color:blue"> <i class="fa fa-external-link-square" aria-hidden="true"></i> Enter</span></a></B></td>                                        
+                      </td> 
+                     </tr>
+                 {% endfor %}
+              </tbody>
+      </table> </div>
+          <div class="card-footer">
+            <div class="stats">
+               <i class="material-icons"><a  href="/profile">Back</a></i> 
+           </div>
+          </div>
+         </div>
+      </div>
+      {% endblock %}
+

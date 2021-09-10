@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>    Madini Tracechain </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet"></head>
+      <!--   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+
+    </head>
+
+<body>
+<section class="hero is-fullheight" style="background-color:#C7D1DF;">
+
+    <div  style="background-color:#C7D1DF;" class="hero-head">
+        <nav   style="background-color:#C7D1DF;" class="navbar">
+             <img class="navbar-brand" src="{{url_for('static', filename='logo.png')}}" width="40" height="40" align="middle" />
+            {% if current_user.is_authenticated %}<b> Welcome  {{ current_user.name }} </b>
+            </a>
+            {% endif %} <div class="navbar-end">
+            <a href="{{ url_for('main.index') }}" class="navbar-item"> 
+                Home
+            </a>
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('main.profile') }}" class="navbar-item">
+                Account
+            </a>
+            {% endif %}
+            {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('auth.login') }}" class="navbar-item">
+                Login
+            </a>
+            <a href="{{ url_for('auth.signup') }}" class="navbar-item">
+                Sign Up
+            </a>
+            {% endif %}
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('auth.logout') }}" class="navbar-item">
+                Logout  
+            </a>
+            {% endif %}
+          </nav>
+    </div>
+
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</section>
+<div class="hero-head"  >
+ 
+    <div  style="background-color:#C7D1DF;" class="hero-head">
+        <nav   align="center" style="background-color:#C7D1DF;" class="navbar">
+             2021-Madini Tracechain 
+           </nav>
+    </div>
+
+</div>
+
+ </body>
+<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ --><!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
+ 
+  <script src="./index.js"></script> 
+  <script src="./crypto-js/crypto-js.js"></script>   
+  
+</html>

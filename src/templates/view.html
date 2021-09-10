@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  .image-upload>input {
+  display: none;
+}
+ </style>
+ <style>
+  main {
+  width: 950px;
+  max-width: 90%;
+  margin: auto;
+}
+
+/* Flexible iFrame */
+
+.Flexible-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
+}
+
+.Flexible-container iframe,   
+.Flexible-container object,  
+.Flexible-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
+<div class="row">
+      <div class="col-md-12">
+        <div class="card card-chart">
+          <div class="card-header card-header-success">
+              <img src="{{ qrcode('#?thash='+thash, error_correction='H')  }}" height="100" width="100"> 
+      &nbsp;&nbsp;<span style="color:blue"> <i class="fa fa-mobile" aria-hidden="true"></i> Scan the QR code</span> 
+        
+</div>
+          <div class="card-body">
+                        <div class="row">
+                <div class="col-md-6"> 
+                  <span  style="color:red" >*</span> 
+                     <label style="font-size: 12px;" for="document">SKU</label>                 
+                  <input type="text" id="sku" class="form-control" required  value="{{ sku }}" required placeholder="SKU Code" disabled/>           
+                  <input type="hidden" id="id" class="form-control" required  value="{{ id }}" required placeholder="SKU Code"/>           
+
+                </div>  
+              <div class="col-md-6"> 
+                <span  style="color:red" >*</span>    <label style="font-size: 12px;font-size: 12px;" for="document">Product Name</label>
+                <input type="text" id="pname" class="form-control" value="{{ pname }}" required placeholder="Product Name" disabled/>           
+            </div>
+          
+            <div class="col-md-8"> 
+          <span  style="color:red" >*</span>    <label style="font-size: 12px;font-size: 12px;" for="document">Write Description</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                </div>
+                <span class="input-group-text">Write Description</span>
+                <textarea  disabled cols="80" rows="10" style="text-align:left"class="form-control" id="descr" name="descr"  aria-label="With textarea" required >{{ bhash }}</textarea>
+                
+              </div>  </div> 
+              <div class="col-md-4"> 
+                <form action='/update' method="POST" autocomplete="off" method = "POST" enctype = "multipart/form-data">
+                <div class="form-group">
+                  <span  style="color:red">*</span> <label style="font-size: 12px;font-size: 12px;" for="document">Main Image</label>
+                  <img src="{{ url_for('static', filename=''+mainimage) }}" alt="image not found" style="width:120%; height:80%;">
+                </div>
+                  
+                <div class="form-group">
+                    <input type="text" id="chunkSize" class="form-control" value="1048576" hidden/>
+                </div>
+                <div class="form-group">
+                     <input type="text"  class="form-control"  hidden   name="hash" id = "hash" required/>
+                </div>
+               </div> 
+              </hr>
+              <div class="col-md-12"> 
+              </p>
+            <hr>  
+            <h7>
+          
+                    <div class="row">
+                      <div class="col-md-12"> 
+                                  </p>
+                                <hr>  
+                                <h7>
+                                  <img src="{{url_for('static', filename='Vechain_Logo.jpg')}}"  width="100" height="200"/>         
+                             <b></b>Blockchain Transactions Powered by Vechain Thor</b>
+                           {{thash}}      
+                          <a target="blank" href="https://explore-testnet.vechain.org/transactions/{{thash}}">Explore</a>
+                          </h7><hr>
+                                </div>
+                              </div>   
+            
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons"><H6 align="middle" style="font-size: 11px;">Powered by Vechain Thor</H6></i> 
+            </div>
+          </div>
+          </div>
+      </div>
+      {% endblock %}
+        
+  

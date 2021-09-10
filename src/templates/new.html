@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  .image-upload>input {
+  display: none;
+}
+ </style>
+    <script src="{{url_for('static', filename='app.js')}}"></script>
+   <script src='https://code.jquery.com/jquery-1.12.3.js'></script>
+   <script src='https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js'></script>
+   <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js" charset="utf-8"></script>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card card-chart">
+          <div class="card-header card-header-success">
+            Stage I of Product Identification 
+          </div>
+          <div class="card-body">
+                        <div class="row">
+                <div class="col-md-6"> 
+                  <span  style="color:red" >*</span> 
+                     <label style="font-size: 12px;" for="document">SKU</label>                 
+                  <input type="text" id="sku" class="form-control" required  placeholder="SKU Code"/>           
+              </div>  
+              <div class="col-md-6"> 
+                <span  style="color:red" >*</span>    <label style="font-size: 12px;font-size: 12px;" for="document">Product Name</label>
+                <input type="text" id="pname" class="form-control"  required placeholder="Product Name"/>           
+            </div>
+          
+            <div class="col-md-6"> 
+          <span  style="color:red" >*</span>    <label style="font-size: 12px;font-size: 12px;" for="document">Write Description</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                </div>
+                <span class="input-group-text">Write Description</span>
+                <textarea class="form-control" id="descr" name="descr"  aria-label="With textarea" required></textarea>
+              </div>  </div> 
+              <div class="col-md-6"> 
+                <span  style="color:red" >*</span>    <label style="font-size: 12px;font-size: 12px;" for="document">Upload Image</label>
+                <form id="uploadnewformmainimage" method="post" enctype="multipart/form-data">
+                  <input name="file" id="document" type="file">
+                <button id="submitnew" type="button"   class="btn btn-primary btn-sm"> <i  style="color:white" class="fa fa-plus"></i>  Upload</button>
+                <input type="text" id="chunkSize" class="form-control" value="1048576" hidden/>
+                <input type="text" id="hash" name="hash" class="form-control"  required  hidden />
+              </form>
+              <p><span style="color:green" id="resultFilename"></span></p>
+                </div> 
+                <div class="col-md-6"> 
+                  <span  style="color:red" >*</span>    <label style="font-size: 12px;font-size: 12px;" for="document">Type</label>
+                  <select class="form-control" id="type" name="type">
+                    <option name="type" id="type">Select</option>
+                    <option value="General Traceability">General Traceability</option>
+                    <option value="Agriculture">Agriculture</option>
+                    <option value="Fresh Produce">Fresh Produce</oprteshtion>
+                    <option value="Meat and Animal">Meat and Animal</option>
+                    <option value="Minerals">Minerals</option>
+                    <option value="Clothing">Clothing</option>
+
+                   </select>      
+                   <span  style="color:red" >*</span> 
+                   <label style="font-size: 12px;font-size: 12px;" for="document">Shape</label>
+                   <input type="text" id="shape"  name="shape" class="form-control" required  placeholder="Shape"/>           
+                   <span  style="color:red" >*</span> 
+                   <label style="font-size: 12px;font-size: 12px;" for="document">Cut</label>
+                   <input type="text" id="cut"  name="cut" class="form-control" required  placeholder="Shape"/>           
+            
+              <span  style="color:red" >*</span> 
+                 <label style="font-size: 12px;font-size: 12px;" for="document">Color</label>
+                 <input type="text" id="color"  name="color" class="form-control" required  placeholder="Color"/>           
+            
+              </div>
+              <div class="col-md-6"> 
+                <span  style="color:red" >*</span> 
+                   <label style="font-size: 12px;font-size: 12px;" for="document">Clarity</label>
+                   <input type="text" id="clarity"  name="clarity" class="form-control" required  placeholder="Clarity"/>           
+            
+              <span  style="color:red" >*</span> 
+                 <label style="font-size: 12px;font-size: 12px;" for="document">Category</label>
+                 <input type="text" id="category"  name="category" class="form-control" required  placeholder="Category"/>           
+                 <span  style="color:red" >*</span> 
+                 <label style="font-size: 12px;font-size: 12px;" for="document">Carats</label>
+                 <input type="text" id="carats"  name="carats" class="form-control" required  placeholder="Carats"/>           
+
+                </div>
+          <div class="col-md-2"> 
+           <br> 
+           <button  type="button" class="button is-block is-info is-small is-fullwidth" onclick="goPython()"><i class="fa fa-save"></i> Create</button>
+             <br>
+            <p style="color:green" id="result" class="result"></p> 
+            <p style="color:green" id="statusMsgsync" class="statusMsgsync"></p>
+            <p style="color:green" id="statusMsg" class="statusMsg"></p>
+            <p style="color:white" id="statusMsgerr" class="statusMsgerr"></p>    </div>    
+            </div>
+          </div>
+                 <div class="card-footer">
+                <div class="stats">
+                   <i class="material-icons"><a  href="/profile">Back</a></i> 
+               </div>
+              </div>
+ 
+          <script>
+            function goPython(){
+                user_data = JSON.stringify({"username": $('#hash').val(),"des": $('#descr').val(),"sku": $('#sku').val(),"type": $('#type').val(),"pname": $('#pname').val(),"shape": $('#shape').val(),"color": $('#color').val(),"carats": $('#carats').val(),"cut": $('#cut').val(),"clarity": $('#clarity').val(),"category": $('#category').val(),"mainimage": $('#document').val().replace(/C:\\fakepath\\/, '')});
+              var hash=$('#hash').val();
+              var sku=$('#sku').val();
+              var pname=$('#pname').val();
+              var descr=$('#descr').val();
+              var document=$('#document').val();
+               console.log(user_data);
+  
+           if(sku.trim() == '' ){
+             $("#sku").focus(); 
+               return false;
+          } 
+           if(pname.trim() == '' ){
+             $("#pname").focus(); 
+               return false;
+          } 
+  
+          else  if(descr.trim() == '' ){
+              $("#descr").focus(); 
+               return false;
+          } 
+          else  if(hash.trim() == '' ){
+              $("#document").focus(); 
+                return false;
+          } 
+          else{
+              $.ajax({
+                  type: "POST",
+                  url: "/createnew",
+                  data: user_data,
+                  headers: {"Content-Type": "application/json"},
+                  beforeSend: function () {
+                   $('.statusMsgsync').html('<span style="color:#209cee;"> <img src="{{url_for('static', filename='loader.gif')}}" />Processing</p>');            },
+                  success: function(response)
+                  {
+                    $('#statusMsgsync').fadeIn().delay(1000).fadeOut();
+                    $('.statusMsg').html('<span style="color:green;">Successful...</p>');
+                      $('#statusMsg').fadeIn().delay(5000).fadeOut();
+                        $("#result").html(response);
+                        $('#hash').val('');
+                        $('#sku').val('');
+                        $('#pname').val('');
+                        $('#descr').val('');
+                        $('#document').val('');
+                  },
+                  error: function(response)
+                  {
+                     // console.log(response);
+                     $('.statusMsgerr').html('<span style="color:red;">Some problem occured,try again</p>');   
+                  }        
+              });
+    } }
+        </script>
+   <script src="../static/hash.js"></script> 
+   <script src="../static/crypto-js.js"></script>   
+         
+ {% endblock %}
+ 
+ 

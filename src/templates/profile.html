@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  .image-upload>input {
+  display: none;
+}
+ </style>
+ <link href="./font-awesome.min.css" rel="stylesheet"></head>
+
+  <div class="row">
+      <div class="col-md-12">
+        <div class="card card-chart">
+          <div class="card-header card-header-success" align="middle">
+            Tracechain  Dashboard
+          </div>
+          <div class="card-body">
+                        <div class="row">
+                <div class="col-md-6"> 
+                  <div class="info-box bg-aqua">
+                    <a href="/projects">    <img src="{{url_for('static', filename='prjcticon.png')}}"  height="50" width="50"/> </a></span>
+        
+                    <div class="info-box-content">
+                      <span class="info-box-text"><a href="/projects">Total Projects</a></span>
+                      <span class="info-box-number">{{value}}</span>
+        
+                      <div class="progress">
+                        <div class="progress-bar" style="width: {{value}}%"></div>
+                      </div>
+ 
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>              </div>  
+              <div class="col-md-6"> 
+                <div class="info-box bg-aqua">
+                  <a href="/new">  <img src="{{url_for('static', filename='new.png')}}"  height="50" width="50"/>   </a>              
+                  <span class="info-box-icon"><i class="ion-ios-chatbubble-outline"></i></span>
+                  <div class="info-box-content">
+                    <span class="info-box-text"><a href="/new">Create New</a></span>
+       
+                    <div class="progress">
+                      <div class="progress-bar" style="width: {{value}}%"></div>
+                    </div>
+                  </div>
+                </div>    </div>
+                         </div> 
+             <hr/>
+                   </div>     
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons"><H6 align="center" style="font-size: 11px;">Powered by Vechain Thor</H6></i> 
+                </div>   </div>
+              </div>
+      
+        
+ {% endblock %}
+  
+
+
+  
+
